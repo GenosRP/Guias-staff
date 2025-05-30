@@ -70,3 +70,11 @@ p {
   font-weight: bold;
   color: #ffcb6b;
 }
+.seccion {
+  display: none;
+}
+
+.seccion.activa {
+  display: block;
+}
+
