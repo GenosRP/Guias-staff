@@ -1,21 +1,29 @@
-// js/router.js
-const routes = {
-  '#normas': 'secciones/normas.html',
-  '#clases': 'secciones/clases.html',
-  '#sanciones': 'secciones/normas.html', // si están en el mismo archivo, se reutiliza
-  // añade más rutas según crezcas
-};
+// router.js
 
-function loadContent() {
-  const hash = window.location.hash || '#normas';
-  const url = routes[hash] || 'secciones/normas.html';
+document.addEventListener("DOMContentLoaded", () => {
+  function loadSectionFromHash() {
+    const hash = window.location.hash.substring(1) || "normas";
+    const sectionPath = `secciones/${hash}.html`;
+    fetch(sectionPath)
+      .then(response => {
+        if (!response.ok) throw new Error("Archivo no encontrado");
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById("main-content").innerHTML = html;
+        // Mover la vista al top de la página (opcional)
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      })
+      .catch(error => {
+        document.getElementById("main-content").innerHTML =
+          `<p style="color: red;">⚠️ Error al cargar la sección: ${hash}</p>`;
+        console.error(error);
+      });
+  }
 
-  fetch(url)
-    .then(res => res.text())
-    .then(html => {
-      document.getElementById('main-content').innerHTML = html;
-    });
-}
+  // Carga inicial
+  loadSectionFromHash();
 
-window.addEventListener('hashchange', loadContent);
-window.addEventListener('DOMContentLoaded', loadContent);
+  // Al cambiar el hash (clic en enlaces del menú)
+  window.addEventListener("hashchange", loadSectionFromHash);
+});
