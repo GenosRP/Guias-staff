@@ -51,3 +51,22 @@ h1, h2 {
 p {
   line-height: 1.6;
 }
+.sidebar-left, .sidebar-right {
+  background: #1f1f1f;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.sidebar-left h2, .sidebar-right h3 {
+  font-size: 1.3em;
+  border-bottom: 1px solid #444;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+.sidebar-left a.active, .sidebar-right a.active {
+  font-weight: bold;
+  color: #ffcb6b;
+}
