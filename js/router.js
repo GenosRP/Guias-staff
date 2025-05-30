@@ -1,20 +1,21 @@
-window.addEventListener('DOMContentLoaded', () => {
-  const mainContent = document.getElementById('main-content');
+// js/router.js
+const routes = {
+  '#normas': 'secciones/normas.html',
+  '#clases': 'secciones/clases.html',
+  '#sanciones': 'secciones/normas.html', // si están en el mismo archivo, se reutiliza
+  // añade más rutas según crezcas
+};
 
-  function loadContent() {
-    const hash = window.location.hash.substring(1) || 'inicio';
-    const file = `./secciones/${hash}.html`;
+function loadContent() {
+  const hash = window.location.hash || '#normas';
+  const url = routes[hash] || 'secciones/normas.html';
 
-    fetch(file)
-      .then((res) => res.text())
-      .then((html) => {
-        mainContent.innerHTML = html;
-      })
-      .catch(() => {
-        mainContent.innerHTML = "<h2>❌ Sección no encontrada.</h2>";
-      });
-  }
+  fetch(url)
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById('main-content').innerHTML = html;
+    });
+}
 
-  window.addEventListener('hashchange', loadContent);
-  loadContent();
-});
+window.addEventListener('hashchange', loadContent);
+window.addEventListener('DOMContentLoaded', loadContent);
